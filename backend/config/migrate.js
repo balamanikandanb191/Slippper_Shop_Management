@@ -15,7 +15,24 @@ async function runMigration() {
   };
 
   try {
-    // 1. Ensure products table exists and has proper columns
+    // 1. Ensure products table exists
+    console.log("Creating products table if not exists...");
+    await query(`
+      CREATE TABLE IF NOT EXISTS products (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        serial_no VARCHAR(50) UNIQUE NOT NULL,
+        brand VARCHAR(100) NOT NULL,
+        type VARCHAR(100) NOT NULL,
+        size VARCHAR(20) NOT NULL,
+        color VARCHAR(50) NOT NULL,
+        purchase_price DECIMAL(10,2) NOT NULL,
+        selling_price DECIMAL(10,2) NOT NULL,
+        stock INT DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      )
+    `);
+
     const columns = await query("SHOW COLUMNS FROM products");
     const columnNames = columns.map(c => c.Field);
 
