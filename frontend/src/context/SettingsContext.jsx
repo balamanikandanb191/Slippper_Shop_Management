@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL;
 const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
@@ -13,7 +13,7 @@ export const SettingsProvider = ({ children }) => {
 
   const loadSettings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/settings");
+      const res = await axios.get(axios.get(`${API}/api/settings`));
       if (res.data) {
         const settingsMap = {
           shop_name: res.data.shop_name || "SoleFlow Footwear",

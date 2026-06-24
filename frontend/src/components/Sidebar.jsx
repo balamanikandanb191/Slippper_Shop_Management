@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+const API = import.meta.env.VITE_API_URL;
 import {
   LayoutDashboard,
   Boxes,

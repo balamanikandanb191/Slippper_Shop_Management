@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import { 
   Plus, 
   RefreshCw, 
@@ -39,11 +40,11 @@ function MasterData() {
     setLoading(true);
     setAlert({ type: "", message: "" });
     Promise.all([
-      axios.get("http://localhost:5000/api/master/brands"),
-      axios.get("http://localhost:5000/api/master/types"),
-      axios.get("http://localhost:5000/api/master/sizes"),
-      axios.get("http://localhost:5000/api/master/colors"),
-      axios.get("http://localhost:5000/api/master/expense_categories")
+      axios.get(`${API}/api/master/brands`),
+      axios.get(`${API}/api/master/types`),
+      axios.get(`${API}/api/master/sizes`),
+      axios.get(`${API}/api/master/colors`),
+      axios.get(`${API}/api/master/expense_categories`)
     ])
       .then(([brandsRes, typesRes, sizesRes, colorsRes, expenseCategoriesRes]) => {
         setBrands(brandsRes.data || []);
@@ -105,8 +106,8 @@ function MasterData() {
     setModalError("");
 
     const url = modalMode === "add" 
-      ? `http://localhost:5000/api/master/${modalCategory}`
-      : `http://localhost:5000/api/master/${modalCategory}/${selectedItem.id}`;
+      ? `${API}/api/master/${modalCategory}`
+      : `${API}/api/master/${modalCategory}/${selectedItem.id}`;
     
     const request = modalMode === "add"
       ? axios.post(url, { name: itemNameInput.trim() })
@@ -140,7 +141,7 @@ function MasterData() {
     }
 
     axios
-      .delete(`http://localhost:5000/api/master/${cat}/${item.id}`)
+      .delete(`${API}//api/master/${cat}/${item.id}`)
       .then(() => {
         fetchAllData();
         window.dispatchEvent(new Event("stock-updated"));

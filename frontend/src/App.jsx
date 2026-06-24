@@ -14,7 +14,7 @@ import { Lock, RefreshCw, Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 
 import { useSettings } from "./context/SettingsContext";
-
+const API = import.meta.env.VITE_API_URL;
 function App() {
   const navigate = useNavigate();
   const { settings } = useSettings();
@@ -40,7 +40,7 @@ function App() {
     setError("");
 
     axios
-      .post("http://localhost:5000/api/settings/verify-password", { password })
+      .post(`${API}/api/settings/verify-password`, { password })
       .then((res) => {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("user", JSON.stringify({ username: "admin" }));

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import { 
   FileSpreadsheet, 
   Printer, 
@@ -76,7 +77,7 @@ function History() {
     const queryString = paramsList.length > 0 ? `?${paramsList.join("&")}` : "";
 
     axios
-      .get(`http://localhost:5000/api/sales${queryString}`)
+      .get(`${API}/api/sales${queryString}`)
       .then((res) => {
         if (res.data) {
           setSalesData(res.data.records || []);
