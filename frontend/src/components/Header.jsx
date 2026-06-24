@@ -13,7 +13,7 @@ import {
   Settings as SettingsIcon
 } from "lucide-react";
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL;
 function Header({ onLogout }) {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [notifications, setNotifications] = useState([]);
@@ -33,7 +33,7 @@ function Header({ onLogout }) {
   // Fetch stored notifications from DB API
   const fetchNotifications = () => {
     axios
-      .get("http://localhost:5000/api/notifications")
+      .get("axios.get(`${API}/api/notifications`)")
       .then((res) => {
         if (res.data) {
           setNotifications(res.data);

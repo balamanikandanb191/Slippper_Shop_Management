@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import { 
   Filter, 
   RefreshCw, 
@@ -45,7 +46,7 @@ function Inventory() {
   // Fetch unique filter values from DISTINCT DB API
   const fetchFilterOptions = () => {
     axios
-      .get("http://localhost:5000/api/products/filters")
+      .get("h${API}/api/products/filters")
       .then((res) => {
         if (res.data) {
           setFilterOptions(res.data);
@@ -58,7 +59,7 @@ function Inventory() {
   const fetchProductsCatalog = () => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/products")
+      .get("${API}/api/products")
       .then((res) => {
         if (res.data) {
           setAllProducts(res.data);
@@ -154,7 +155,7 @@ function Inventory() {
     setInlineModal(prev => ({ ...prev, submitting: true, error: "" }));
 
     axios
-      .post(`http://localhost:5000/api/master/${inlineModal.category}`, { name: inlineModal.value.trim() })
+      .post(`${API}/api/master/${inlineModal.category}`, { name: inlineModal.value.trim() })
       .then((res) => {
         window.dispatchEvent(new Event("stock-updated"));
         

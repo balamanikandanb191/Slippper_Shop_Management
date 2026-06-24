@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import { 
   ShoppingCart, 
   Trash2, 
@@ -61,7 +62,7 @@ function Billing() {
   // Fetch all products
   const fetchProducts = () => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get('${API}/api/products')
       .then((res) => {
         if (res.data) {
           setAllProducts(res.data);
@@ -247,7 +248,7 @@ function Billing() {
     };
 
     axios
-      .post("http://localhost:5000/api/sales", salePayload)
+      .post(`${API}/api/sales`, salePayload)
       .then((res) => {
         setCheckoutSuccess(true);
         setSmsWarning(!!res.data.smsWarning);

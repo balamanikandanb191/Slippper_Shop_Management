@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import {
   Plus,
   RefreshCw,
@@ -45,7 +46,7 @@ function Expenses() {
 
   const fetchCategories = () => {
     axios
-      .get("http://localhost:5000/api/master/expense_categories")
+      .get(`${API}/api/master/expense_categories`)
       .then((res) => {
         setCategories((res.data || []).map(item => item.name));
       })
@@ -75,7 +76,7 @@ function Expenses() {
     if (searchQuery) params.search = searchQuery;
 
     axios
-      .get("http://localhost:5000/api/expenses", { params })
+      .get(`${API}/api/expenses`, { params })
       .then((res) => {
         setExpenses(res.data || []);
         setLoading(false);
@@ -106,7 +107,7 @@ function Expenses() {
     setEndDate("");
     // We clear values and fetch again immediately
     axios
-      .get("http://localhost:5000/api/expenses")
+      .get(`${API}/api/expenses`)
       .then((res) => {
         setExpenses(res.data || []);
       })
@@ -159,8 +160,8 @@ function Expenses() {
     setModalError("");
 
     const url = modalMode === "add"
-      ? "http://localhost:5000/api/expenses"
-      : `http://localhost:5000/api/expenses/${selectedExpense.id}`;
+      ? `${API}/api/expenses`
+      : `${API}/api/expenses/${selectedExpense.id}`;
 
     const payload = {
       expense_name: expenseName.trim(),
@@ -197,7 +198,7 @@ function Expenses() {
     }
 
     axios
-      .delete(`http://localhost:5000/api/expenses/${exp.id}`)
+      .delete(`${API}/api/expenses/${exp.id}`)
       .then(() => {
         fetchExpenses();
         setAlert({

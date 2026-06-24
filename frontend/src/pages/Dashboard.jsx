@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 import { 
   Package, 
   Layers, 
@@ -50,7 +51,7 @@ function Dashboard() {
   const fetchDashboardData = () => {
     const threshold = localStorage.getItem("settings_stockThreshold") || 5;
     axios
-      .get(`http://localhost:5000/api/dashboard?threshold=${threshold}`)
+      .get(`${API}/api/dashboard?threshold=${threshold}`)
       .then((res) => {
         if (res.data) {
           setStats(res.data);
@@ -62,7 +63,7 @@ function Dashboard() {
   // Fetch unique filter values from DISTINCT DB API
   const fetchFilterOptions = () => {
     axios
-      .get("http://localhost:5000/api/products/filters")
+      .get(`${API}/api/products/filters`)
       .then((res) => {
         if (res.data) {
           setFilterOptions(res.data);
@@ -74,7 +75,7 @@ function Dashboard() {
   // Fetch all products for filtered search catalog
   const fetchProductsCatalog = () => {
     axios
-      .get("http://localhost:5000/api/products")
+      .get(`${API}/api/products`)
       .then((res) => {
         if (res.data) {
           setAllProducts(res.data);

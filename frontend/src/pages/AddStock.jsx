@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { PackageOpen, Sparkles, RefreshCw, Trash2, ArrowRight, X, AlertTriangle } from "lucide-react";
-
+const API = import.meta.env.VITE_API_URL;
 function AddStock() {
   const initialFormState = {
     serial_no: "",
@@ -43,7 +43,7 @@ function AddStock() {
   // Fetch unique filter values from DISTINCT DB API
   const fetchFilterOptions = (selectNewCategory = null, selectNewValue = null) => {
     axios
-      .get("http://localhost:5000/api/products/filters")
+      .get(`${API}/api/settings`)
       .then((res) => {
         if (res.data) {
           setFilterOptions(res.data);
@@ -66,7 +66,7 @@ function AddStock() {
       const delayDebounce = setTimeout(() => {
         setCheckingSerial(true);
         axios
-          .get("http://localhost:5000/api/products/search/attributes", {
+          .get(`${API}/api/products/search/attributes`, {
             params: { brand, type, size, color }
           })
           .then((res) => {
@@ -150,7 +150,7 @@ function AddStock() {
     setAlert({ type: "", message: "" });
 
     axios
-      .post("http://localhost:5000/api/products", formData)
+      .post(`${API}/api/products`, formData)
       .then((res) => {
         const actionText = isExisting ? "topped up" : "added";
         const purchaseVal = parseFloat(formData.purchase_price) || 0;
@@ -208,7 +208,7 @@ function AddStock() {
     setInlineModal(prev => ({ ...prev, submitting: true, error: "" }));
 
     axios
-      .post(`http://localhost:5000/api/master/${inlineModal.category}`, { name: inlineModal.value.trim() })
+      .post(`${API}/api/master/${inlineModal.category}`, { name: inlineModal.value.trim() })
       .then((res) => {
         window.dispatchEvent(new Event("stock-updated"));
         

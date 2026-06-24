@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Save, Store, ShieldCheck, Upload, RefreshCcw, Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useSettings } from "../context/SettingsContext";
-
+const API = import.meta.env.VITE_API_URL;
 function Settings() {
   const { settings, loadSettings } = useSettings();
 
@@ -40,7 +40,7 @@ function Settings() {
     setAlert({ type: "", message: "" });
 
     try {
-      await axios.post("http://localhost:5000/api/settings", {
+      await axios.post(`${API}/api/settings', {
         shop_name: shopName,
         shop_address: shopAddress,
         shop_phone: shopPhone,
@@ -94,7 +94,7 @@ function Settings() {
     setPasswordLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/api/settings/change-password", {
+      await axios.post('${API}/api/settings/change-password`,{
         currentPassword,
         newPassword
       });
