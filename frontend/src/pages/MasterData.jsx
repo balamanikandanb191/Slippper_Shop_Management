@@ -141,7 +141,7 @@ function MasterData() {
     }
 
     axios
-      .delete(`${API}//api/master/${cat}/${item.id}`)
+      .delete(`${API}/api/master/${cat}/${item.id}`)
       .then(() => {
         fetchAllData();
         window.dispatchEvent(new Event("stock-updated"));

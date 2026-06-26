@@ -46,7 +46,7 @@ function Inventory() {
   // Fetch unique filter values from DISTINCT DB API
   const fetchFilterOptions = () => {
     axios
-      .get("h${API}/api/products/filters")
+      .get(`${API}/api/products/filters`)
       .then((res) => {
         if (res.data) {
           setFilterOptions(res.data);
@@ -59,7 +59,7 @@ function Inventory() {
   const fetchProductsCatalog = () => {
     setLoading(true);
     axios
-      .get("${API}/api/products")
+      .get(`${API}/api/products`)
       .then((res) => {
         if (res.data) {
           setAllProducts(res.data);

@@ -40,7 +40,7 @@ function Settings() {
     setAlert({ type: "", message: "" });
 
     try {
-      await axios.post(`${API}/api/settings', {
+      await axios.post(`${API}/api/settings`, {
         shop_name: shopName,
         shop_address: shopAddress,
         shop_phone: shopPhone,
@@ -94,7 +94,7 @@ function Settings() {
     setPasswordLoading(true);
 
     try {
-      await axios.post('${API}/api/settings/change-password`,{
+      await axios.post(`${API}/api/settings/change-password`, {
         currentPassword,
         newPassword
       });
