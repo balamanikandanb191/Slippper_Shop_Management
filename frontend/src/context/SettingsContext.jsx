@@ -13,7 +13,7 @@ export const SettingsProvider = ({ children }) => {
 
   const loadSettings = async () => {
     try {
-      const res = await axios.get(axios.get(`${API}/api/settings`));
+      const res = await axios.get(`${API}/api/settings`);
       if (res.data) {
         const settingsMap = {
           shop_name: res.data.shop_name || "SoleFlow Footwear",

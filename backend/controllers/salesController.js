@@ -603,17 +603,17 @@ exports.getNotifications = async (req, res) => {
 
     // 2. Fetch products that are low stock or out of stock
     const products = await query(`
-      SELECT id, serial_no, brand, type, size, color, stock, created_at, updated_at 
+      SELECT id, serial_no, brand, type, size, color, stock, created_at 
       FROM products 
       WHERE stock = 0 OR (stock > 0 AND stock <= ?)
-      ORDER BY stock ASC, updated_at DESC
+      ORDER BY stock ASC, created_at DESC
     `, [threshold]);
 
     // 3. Map to notification-like objects dynamically
     const notifications = products.map((prod) => {
       const isOutOfStock = prod.stock === 0;
       const type = isOutOfStock ? "out_of_stock" : "low_stock";
-      const timestamp = prod.updated_at || prod.created_at || new Date();
+      const timestamp = prod.created_at || new Date();
       
       const message = isOutOfStock
         ? `🚫 Out of Stock\nProduct: ${prod.brand} ${prod.type} ${prod.color} Size ${prod.size}\nSKU: ${prod.serial_no}`

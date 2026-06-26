@@ -62,7 +62,7 @@ function Billing() {
   // Fetch all products
   const fetchProducts = () => {
     axios
-      .get('${API}/api/products')
+      .get(`${API}/api/products`)
       .then((res) => {
         if (res.data) {
           setAllProducts(res.data);
@@ -106,7 +106,7 @@ function Billing() {
 
     // 1. First prioritize Brand Name (starts with matching)
     const brandMatches = allProducts.filter((p) =>
-      p.brand.toLowerCase().startsWith(query)
+      p && p.brand && p.brand.toLowerCase().startsWith(query)
     );
 
     if (brandMatches.length > 0) {
@@ -115,8 +115,10 @@ function Billing() {
 
     // 2. If no brand matches, fallback to Product Type or Serial Number (starts with matching)
     return allProducts.filter((p) =>
-      p.type.toLowerCase().startsWith(query) ||
-      p.serial_no.toLowerCase().startsWith(query)
+      p && (
+        (p.type && p.type.toLowerCase().startsWith(query)) ||
+        (p.serial_no && p.serial_no.toLowerCase().startsWith(query))
+      )
     );
   };
 

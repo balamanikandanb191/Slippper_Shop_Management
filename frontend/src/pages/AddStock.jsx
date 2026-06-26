@@ -43,7 +43,7 @@ function AddStock() {
   // Fetch unique filter values from DISTINCT DB API
   const fetchFilterOptions = (selectNewCategory = null, selectNewValue = null) => {
     axios
-      .get(`${API}/api/settings`)
+      .get(`${API}/api/products/filters`)
       .then((res) => {
         if (res.data) {
           setFilterOptions(res.data);
